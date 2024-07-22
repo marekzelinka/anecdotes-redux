@@ -15,12 +15,22 @@ function getRandomAnecdoteIndex() {
   return Math.floor(Math.random() * anecdotes.length)
 }
 
+function getMostVotesAnecdote(points) {
+  let mostPoints = Math.max(...points)
+  let anecdoteIndex = points.indexOf(mostPoints)
+
+  return { anecdote: anecdotes[anecdoteIndex], points: mostPoints }
+}
+
 function App() {
   let [selected, setSelected] = useState(0)
   let [points, setPoints] = useState(Array(anecdotes.length).fill(0))
 
-  let handleNextClick = () => setSelected(getRandomAnecdoteIndex())
-  let handleVoteClick = () => {
+  let topAnecdote = getMostVotesAnecdote(points)
+
+  let handleNext = () => setSelected(getRandomAnecdoteIndex())
+
+  let handleVote = () => {
     let copy = points.slice()
     copy[selected] += 1
     setPoints(copy)
@@ -28,14 +38,22 @@ function App() {
 
   return (
     <>
-      <div>{anecdotes[selected]}</div>
-      <div>has {points[selected]} votes</div>
-      <button type="button" onClick={handleVoteClick}>
-        vote
-      </button>
-      <button type="button" onClick={handleNextClick}>
-        next anecdote
-      </button>
+      <section>
+        <h2>Anecdote of the day</h2>
+        <div>{anecdotes[selected]}</div>
+        <div>has {points[selected]} votes</div>
+        <button type="button" onClick={handleVote}>
+          vote
+        </button>
+        <button type="button" onClick={handleNext}>
+          next anecdote
+        </button>
+      </section>
+      <section>
+        <h2>Anecdote with most votes</h2>
+        <div>{topAnecdote.anecdote}</div>
+        <div>has {topAnecdote.points} votes</div>
+      </section>
     </>
   )
 }
