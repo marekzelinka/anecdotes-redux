@@ -11,12 +11,22 @@ let anecdotes = [
   'The only way to go fast, is to go well.',
 ]
 
+function getRandomAnecdoteIndex() {
+  return Math.floor(Math.random() * anecdotes.length)
+}
+
 function App() {
   let [selected, setSelected] = useState(0)
 
   return (
     <>
       <div>{anecdotes[selected]}</div>
+      <button
+        type="button"
+        onClick={() => setSelected(getRandomAnecdoteIndex())}
+      >
+        next anecdote
+      </button>
     </>
   )
 }
