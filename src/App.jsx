@@ -17,14 +17,23 @@ function getRandomAnecdoteIndex() {
 
 function App() {
   let [selected, setSelected] = useState(0)
+  let [points, setPoints] = useState(Array(anecdotes.length).fill(0))
+
+  let handleNextClick = () => setSelected(getRandomAnecdoteIndex())
+  let handleVoteClick = () => {
+    let copy = points.slice()
+    copy[selected] += 1
+    setPoints(copy)
+  }
 
   return (
     <>
       <div>{anecdotes[selected]}</div>
-      <button
-        type="button"
-        onClick={() => setSelected(getRandomAnecdoteIndex())}
-      >
+      <div>has {points[selected]} votes</div>
+      <button type="button" onClick={handleVoteClick}>
+        vote
+      </button>
+      <button type="button" onClick={handleNextClick}>
         next anecdote
       </button>
     </>
