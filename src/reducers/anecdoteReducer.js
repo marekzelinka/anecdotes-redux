@@ -23,10 +23,13 @@ const anecdoteSlice = createSlice({
     setAnecdotes: (_state, action) => {
       return action.payload
     },
+    addAnecdote: (state, action) => {
+      state.push(action.payload)
+    },
   },
 })
 
 export const {
   reducer: anecdoteReducer,
-  actions: { createAnecdote, addVoteToAnecdote, setAnecdotes },
+  actions: { createAnecdote, addVoteToAnecdote, setAnecdotes, addAnecdote },
 } = anecdoteSlice

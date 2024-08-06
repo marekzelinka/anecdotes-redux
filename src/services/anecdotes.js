@@ -8,3 +8,9 @@ export async function getAllAnecdotes() {
   const response = await instance.get('/')
   return response.data
 }
+
+export async function createAnecdote(content) {
+  const anecdoteObject = { content, votes: 0 }
+  const response = await instance.post('/', anecdoteObject)
+  return response.data
+}
