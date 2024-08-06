@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { addVote } from './reducer.js'
+import { addVote, createAnecdote } from './reducer.js'
 
 function App() {
   const dispatch = useDispatch()
@@ -31,14 +31,17 @@ function App() {
           const form = event.target
           const formData = new FormData(form)
 
-          const anecdote = formData.get('anecdote')?.toString()
-          console.log('create', anecdote)
+          const content = formData.get('content')?.toString()
+          dispatch(createAnecdote(content))
+
+          form.reset()
+          form.elements.content?.focus()
         }}
       >
         <input
           type="text"
-          name="anecdote"
-          id="anecdote"
+          name="content"
+          id="content"
           aria-label="New anecodte"
         />
         <button type="submit">create</button>

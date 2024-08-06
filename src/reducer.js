@@ -24,12 +24,15 @@ export function reducer(state = initialState, action) {
   console.log('action', action)
 
   switch (action.type) {
-    case 'ADD_VOTE': {
+    case 'VOTE': {
       return state.map((anecdote) =>
         anecdote.id === action.payload.id
           ? { ...anecdote, votes: anecdote.votes + 1 }
           : anecdote,
       )
+    }
+    case 'NEW_ANECDOTE': {
+      return state.concat(action.payload)
     }
     default: {
       return state
@@ -39,9 +42,20 @@ export function reducer(state = initialState, action) {
 
 export function addVote(id) {
   return {
-    type: 'ADD_VOTE',
+    type: 'VOTE',
     payload: {
       id,
+    },
+  }
+}
+
+export function createAnecdote(content) {
+  return {
+    type: 'NEW_ANECDOTE',
+    payload: {
+      content,
+      id: generateId(),
+      votes: 0,
     },
   }
 }
